@@ -1,0 +1,33 @@
+#!/bin/sh
+# This is a notes taking program.
+#clear
+echo "Current notes:"
+echo -n "" >> save.notes # create a save.notes file in case the file doesn't exist.
+
+# Display the current notes.
+cat save.notes
+
+# Read a new line
+read new_line
+
+while [ "$new_line" != "exit" ]
+do
+
+	if [ "$new_line" = "delete all" ]
+	then
+		echo -n "" > save.notes
+	else
+	
+		# Save the new line to terminal.
+		echo $new_line >> save.notes
+
+	fi
+
+
+
+ #       clear
+        echo "Current notes:"
+        cat save.notes
+
+	read new_line
+done
