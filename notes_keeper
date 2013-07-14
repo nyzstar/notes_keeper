@@ -2,24 +2,75 @@
 # This is a notes taking program.
 #clear
 
+#####################Functions####################################
+interactiveMode(){
 while :
 do
-	# A simple title of the program.
-	echo "Current notes: "
 	echo -n "" >> save.notes # create a save.notes file in case the file doesn't exist.
-	
-	# Display the current notes.
-	cat save.notes
+	# Display current notes
+ 	displayNotes
 	
 	# Read a new line
 	read new_line
 	
 	case $new_line in
 		"rm all") echo -n "" > save.notes;;
-		"exit") exit 0 ;;
+		"exit") return;;
 		*) echo $new_line >> save.notes ;;
 	esac
 	
  #       clear
 
 done
+}
+
+addANote(){
+	#echo "$1" #debug
+	echo "$1" >> save.notes
+	return
+}
+
+# Diaplay the current notes
+displayNotes(){
+	echo "Current Notes: "
+	cat save.notes
+}
+
+helpNotesKeeper(){
+	echo "Usage: "
+	echo "================================================"
+	echo "Shell Mode: $0 -a -d -h"
+	echo "Options: These are optional argument"
+	echo "-a \"new note\" :		add \"new note\""
+	echo "-d :			display all the current notes"
+	echo "-h :			show instructions"
+	echo "================================================"
+	echo "Interative Mode: $0"
+	echo "Commands: These are available command so far"
+	echo "rm all :		remove all the notes"
+	echo "\"new_notes\" :		add \"new_notes\" to the list"
+	echo "exit :			exit the program"
+}
+##################################################################
+
+
+######################Main Function###############################
+
+# if no argument
+#
+if [ $# -lt 1 ]; then
+	# launch interactive mode.
+	interactiveMode
+fi
+while getopts a:dh opt
+do
+	case "$opt" in
+		a) addANote "$OPTARG";;
+		d) displayNotes;;
+		h) helpNotesKeeper;;
+	esac
+done
+
+
+
+
